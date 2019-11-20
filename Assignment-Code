@@ -1,0 +1,71 @@
+// include standard C input/output functions
+#include<stdio.h> 
+// required for pow to work ; (C Library - <math.c>, 2019) 
+#include<math.h> 
+
+main()
+{
+//	Declaration of Data Types
+//	The following variables is declared as integer
+//	LoanYears = Number of Years - Input by user
+//	NumberPayment = Number of Payments (represented N in the formula given)
+	int LoanYears, NumberPayment ; 
+
+//	The following variables is declared as float
+//	LoanAmount = Loan Amount - Input by user (represented A in the formula given)
+//	AnnualRate = Annual Rate of Interest
+//	MonthlyPayment = Monthly Payment (represented P in the formula given)
+//	InterestRate = Rate of Interest (represented r in the formula given)
+//	A, B, C, = Sub calculations
+//	TotalPayment = Total Payment (P x N)
+	float LoanAmount, AnnualRate, MonthlyPayment, InterestRate, A, B, C, TotalPayment ; 
+
+//	User Input Start
+//	User need to input the Loan Amount
+	printf ("Please enter Loan Amount: ");
+//	Reads the user's input for the value LoanAmount
+	scanf ("%f", &LoanAmount);
+//	User need to input the Number of Years 	
+	printf ("Please enter Number of Years: ");
+//	Reads the user's input for the value LoanYears	
+	scanf ("%d", &LoanYears);
+//	Generate a new line	
+	printf ("\n"); 
+//	User Input End
+
+//	Display the user's inputs of Loan Amount
+	printf("Loan Amount: %.2f \n", LoanAmount);
+//	Display the user's inputs of Number of Years
+	printf("Number of Years: %.2d \n \n", LoanYears);
+//	Display the header for the tables of the output
+	printf("Annual Interest Rate \t  Monthly Payment \t Total Payment \n");
+	
+	printf("%41s \t %14s \n", "(RM)","(RM)" ); // (Gookin, 2019)
+
+//	Repetition statement start, using "for" as loop
+//	Sets Annual Rate at 3.50%, and the loop until Annual Rate is equal or less 8
+	for ( AnnualRate= 3.50; AnnualRate <= 8; )
+	{
+//		Calculations of the Rate of Interest
+		InterestRate = ( AnnualRate / 100 ) / 12;
+//		Sub-calculations for formula given
+//		First part of the calculations ( r * A ) 
+		A = ( InterestRate * LoanAmount );
+//		Second part of the calculations (1 + r)
+		C = (1 + InterestRate);
+//		Third part of the calculations, which needed the use of pow fuction	( 1 - (1 + r)- N)	
+		B = 1 - ( 1.0 / ( pow ( C, LoanYears * 12 ) ) ); // (C Code for Negative Exponents, 2019) 
+//		The final calculation of the formula 
+		MonthlyPayment = A / B;
+//		Calculate the Total Payment for the loan based on the years (P x N)
+		TotalPayment = MonthlyPayment * LoanYears * 12;
+//		Display the constant annual rate for the line from 3.5% to 8.0%	
+		printf ("\t  %.2f %c", AnnualRate, 37); // (How do I print the percent sign(%) in C, 2019)
+//		Display the output of monthly payment for the above constant annual rate		
+		printf ("\t\t %.2f", MonthlyPayment);
+//		Display the output of total payment for the above constant annual rate
+		printf ("\t\t %.2f \n", TotalPayment);
+//		Add 0.25% to the loop		
+		AnnualRate = AnnualRate + 0.25;
+	}
+}
